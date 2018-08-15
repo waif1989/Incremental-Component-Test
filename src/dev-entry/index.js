@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import {patch} from 'incremental-dom';
 import IncraCom from 'demo';
+import IncraCom2 from 'demo2';
 import ReactRender from '../react-component';
 import MyComponent from '../my-component';
 new Vue({
@@ -12,6 +13,8 @@ new Vue({
 });
 window.addEventListener('DOMContentLoaded', () => {  // 添加DOMContentLoaded事件
     ReactRender('reactapp');
+	const instance = Object.create(IncraCom2());
+	console.log('---', instance.rootElm);
     /*function render (data) {
         elementVoid('input', '', [ 'type', 'text' ]);
         elementOpen('div', '', null);

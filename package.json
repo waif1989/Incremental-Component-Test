@@ -1,6 +1,7 @@
 {
   "name": "webpack4.8.x-config",
   "version": "1.0.0",
+  "private": true,
   "description": "Base on webpack4.8.x and vue which can uses for developing and baling component light framework",
   "main": "index.js",
   "scripts": {

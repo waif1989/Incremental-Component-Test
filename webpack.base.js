@@ -111,7 +111,9 @@ const webpackBaseConfig = {
         alias: {
             'vue$': 'vue/dist/vue.esm.js',
             '@': path.resolve('src'),
-            'demo': path.resolve('', 'src/incramental-component/index.js')
+	        'baseCom': path.resolve('', 'src/incra-comp-base/index.js'),
+            'demo': path.resolve('', 'src/incramental-component/index.js'),
+	        'demo2': path.resolve('', 'src/incramental-component2/index.js')
         }
     },
     context: __dirname
