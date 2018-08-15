@@ -1,0 +1,12 @@
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "modules": false,
+        "browsers": ["last 2 versions", "safari >= 7"],
+        "debug": false,
+        "useBuiltIns": true
+      }
+    }],"stage-2"],
+  "plugins": ["transform-runtime", "transform-incremental-dom"]
+}

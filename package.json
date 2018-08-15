@@ -1,0 +1,52 @@
+{
+  "name": "webpack4.8.x-config",
+  "version": "1.0.0",
+  "description": "Base on webpack4.8.x and vue which can uses for developing and baling component light framework",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "cross-env NODE_ENV=development node_modules/.bin/webpack-dev-server --config webpack.dev.js --port 9081 --open --mode=development",
+    "build": "cross-env NODE_ENV=production node_modules/.bin/webpack --config webpack.prod.js --mode=production",
+    "test": "mocha"
+  },
+  "keywords": [
+    "webpack4.8.x",
+    "vue",
+    "component"
+  ],
+  "author": "chensiwei",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-incremental-dom": "^4.2.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-runtime": "^6.26.0",
+    "cross-env": "^5.1.6",
+    "css-loader": "^0.28.11",
+    "file-loader": "^1.1.11",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "incremental-dom": "^0.5.1",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "path": "^0.12.7",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "sass-loader": "^7.0.1",
+    "style-loader": "^0.21.0",
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "vue": "^2.5.16",
+    "vue-loader": "^15.2.0",
+    "vue-style-loader": "^4.1.0",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-merge": "^4.1.3"
+  }
+}
