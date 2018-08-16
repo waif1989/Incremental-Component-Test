@@ -1,13 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import IncraCom from 'demo';
+import IncraCom2 from 'demo2';
 import {patch} from 'incremental-dom';
 class App extends React.Component {
     constructor (props) {
         super(props);
     }
     componentDidMount () {
-        function inputHandlerCb (val) {
+        const instance = Object.create(IncraCom2());
+        instance.initCom({
+            className: 'coutonName3',
+            title: 'IncreDom In React',
+            num: 100
+        });
+        instance.render('#react-child');
+        setTimeout(() => {
+            instance.updateProps({
+                num: 101
+            });
+        }, 1000);
+        /*function inputHandlerCb (val) {
             console.log('In React Parent:', val);
         }
         function setStateData (data = {}, myElement, _data) {
@@ -35,7 +48,7 @@ class App extends React.Component {
             setStateData({
                 text: 'React Inside End!'
             }, myElement, data);
-        }, 2500);
+        }, 2500);*/
     }
     render () {
         return (

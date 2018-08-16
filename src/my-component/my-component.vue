@@ -7,10 +7,11 @@
 
 <script>
 import IncraCom from 'demo';
+import IncraCom2 from 'demo2';
 import {patch} from 'incremental-dom';
 export default {
     name: 'MyComponent',
-	mounted () {
+	/*mounted () {
         function inputHandlerCb (val) {
             console.log('In Vue Parent:', val);
         }
@@ -40,6 +41,20 @@ export default {
                 text: 'Vue Inside End!'
             }, myElement, data);
         }, 2500);
+	}*/
+	mounted () {
+        const instance = Object.create(IncraCom2());
+        instance.initCom({
+            className: 'coutonName2',
+            title: 'IncreDom In Vue',
+            num: 90
+        });
+        instance.render('#vue-inside');
+        setTimeout(() => {
+            instance.updateProps({
+                num: 91
+            });
+        }, 2000);
 	}
 }
 </script>

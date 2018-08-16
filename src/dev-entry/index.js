@@ -13,8 +13,27 @@ new Vue({
 });
 window.addEventListener('DOMContentLoaded', () => {  // 添加DOMContentLoaded事件
     ReactRender('reactapp');
+    
+    function reduce (val) {
+        console.log('Real DOM Parent Val:', val)
+    }
+    function add (val) {
+        console.log('Real DOM Parent Val:', val)
+    }
 	const instance = Object.create(IncraCom2());
-	console.log('---', instance.rootElm);
+    instance.initCom({
+        className: 'coutonName',
+        title: 'IncreDom In RealDom',
+        num: 1
+    }, reduce, add);
+	// console.log('===', instance);
+    instance.render('#domapp');
+    setTimeout(() => {
+        instance.updateProps({
+            num: 2
+        });
+    }, 3000);
+    
     /*function render (data) {
         elementVoid('input', '', [ 'type', 'text' ]);
         elementOpen('div', '', null);
@@ -24,7 +43,7 @@ window.addEventListener('DOMContentLoaded', () => {  // 添加DOMContentLoaded�
         text(data.val);
         elementClose('div');
     }*/
-    function inputHandlerCb (val) {
+    /*function inputHandlerCb (val) {
         console.log('In Read Dom Parent:', val);
     }
     function setStateData (data = {}, myElement, _data) {
@@ -52,5 +71,5 @@ window.addEventListener('DOMContentLoaded', () => {  // 添加DOMContentLoaded�
         setStateData({
             text: 'Read Dom End!'
         }, myElement, data);
-    }, 2500);
+    }, 2500);*/
 }, false);
