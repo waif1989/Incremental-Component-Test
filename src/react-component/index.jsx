@@ -8,12 +8,18 @@ class App extends React.Component {
         super(props);
     }
     componentDidMount () {
+        function reduce (val) {
+            console.log('React Parent Val:', val)
+        }
+        function add (val) {
+            console.log('React Parent Val:', val)
+        }
         const instance = Object.create(IncraCom2());
         instance.initCom({
             className: 'coutonName3',
             title: 'IncreDom In React',
             num: 100
-        });
+        }, reduce, add);
         instance.render('#react-child');
         setTimeout(() => {
             instance.updateProps({

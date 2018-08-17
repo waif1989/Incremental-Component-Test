@@ -43,12 +43,18 @@ export default {
         }, 2500);
 	}*/
 	mounted () {
+        function reduce (val) {
+            console.log('Vue Parent Val:', val)
+        }
+        function add (val) {
+            console.log('Vue Parent Val:', val)
+        }
         const instance = Object.create(IncraCom2());
         instance.initCom({
             className: 'coutonName2',
             title: 'IncreDom In Vue',
             num: 90
-        });
+        }, reduce, add);
         instance.render('#vue-inside');
         setTimeout(() => {
             instance.updateProps({

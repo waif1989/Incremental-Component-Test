@@ -5,11 +5,11 @@ const incraCom = () => {
 	const myIncraCom = {};
 	Object.setPrototypeOf(myIncraCom, COMMON_COM);
     myIncraCom.initCom = function (props, reduceCb, addCb) {
-        this.props = props;
-        this.state = {
+        this.initProps(props);
+        this.initState({
             val: 1000
-        };
-        this.template = () => {
+        });
+        const template =() => {
             return (
                 <div class="content">
                     <div class={this.state.val < 1001 ? this.props.className : `${this.props.className} red`}>{this.props.title}↓</div>
@@ -22,6 +22,7 @@ const incraCom = () => {
                 </div>
             );
         };
+        this.initTemplate(template);
         const reduce = () => {
             const result = this.state.val - 1;
             /* ---------------------------------- */

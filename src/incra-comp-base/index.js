@@ -1,12 +1,14 @@
 import {elementOpen, elementClose, elementVoid, text, patch} from 'incremental-dom';
 import select from 'select-dom';
-import IncraCom from "@/incramental-component";
 const baseComponent = {
-	rootElm: document.createElement('div'),
-	props: {},
-	state: {},
-	template () {
-		return (<div></div>);
+	initTemplate (temp) {
+		this.temp = temp;
+	},
+	initProps (props) {
+		this.props = props;
+	},
+	initState (state) {
+		this.state = state;
 	},
 	created () {},
 	render (elm) {
@@ -18,18 +20,16 @@ const baseComponent = {
 		}
 		this.rootElm = root;
 		patch(root, () => {
-            const temp = this.template();
-            if (typeof temp.func === 'function') {
-                temp.func()
+            if (this.temp) {
+                this.temp();
+            } else {
+                return (<div></div>);
             }
 		});
 	},
 	update () {
         patch(this.rootElm, () => {
-            const temp = this.template();
-            if (typeof temp.func === 'function') {
-                temp.func()
-            }
+            this.temp();
         });
 	},
 	setState (data) {

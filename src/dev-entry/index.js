@@ -26,13 +26,20 @@ window.addEventListener('DOMContentLoaded', () => {  // 添加DOMContentLoaded�
         title: 'IncreDom In RealDom',
         num: 1
     }, reduce, add);
-	// console.log('===', instance);
     instance.render('#domapp');
     setTimeout(() => {
         instance.updateProps({
             num: 2
         });
     }, 3000);
+    
+    const instance2 = Object.create(IncraCom2());
+    instance2.initCom({
+        className: 'coutonName',
+        title: 'IncreDom In RealDom2',
+        num: -1
+    });
+    instance2.render('#domapp2');
     
     /*function render (data) {
         elementVoid('input', '', [ 'type', 'text' ]);
