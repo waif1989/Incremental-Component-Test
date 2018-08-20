@@ -15,7 +15,7 @@ class BaseIncreComponent {
 			this.setTemplate();
 		});
 	}
-	render (elm) {
+	insert (elm) {
 		let root = null;
 		if (!elm) {
 			root = document.createElement('div');
@@ -23,7 +23,14 @@ class BaseIncreComponent {
 			root = select(elm);
 		}
 		this.rootElm = root;
-		this.update(this.rootElm);
+		const beforeMounted = this.beforeMounted();
+		if (typeof beforeMounted !== 'boolean' && !beforeMounted) {
+			this.render(this.rootElm);
+			this.didMounted();
+		}
+	}
+	render (elm) {
+		this.update(elm);
 	}
 	setTemplate () {
 		return (<div></div>);
