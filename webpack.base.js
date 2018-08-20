@@ -113,7 +113,8 @@ const webpackBaseConfig = {
             '@': path.resolve('src'),
 	        'baseCom': path.resolve('', 'src/incra-comp-base/index.js'),
             'demo': path.resolve('', 'src/incramental-component/index.js'),
-	        'demo2': path.resolve('', 'src/incramental-component2/index.js')
+	        'demo2': path.resolve('', 'src/incramental-component2/index.js'),
+	        'demo3': path.resolve('', 'src/incramental-component3/index.js')
         }
     },
     context: __dirname
