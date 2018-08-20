@@ -10,11 +10,7 @@ class BaseIncreComponent {
 	didMounted () {}
 	beforeDestroy () {}
 	destroy () {}
-	update (elm) {
-		patch(elm, () => {
-			this.setTemplate();
-		});
-	}
+	updateComponent () {}
 	insert (elm) {
 		let root = null;
 		if (!elm) {
@@ -25,19 +21,24 @@ class BaseIncreComponent {
 		this.rootElm = root;
 		const beforeMounted = this.beforeMounted();
 		if (typeof beforeMounted !== 'boolean' && !beforeMounted) {
-			this.render(this.rootElm);
+			this._patch(this.rootElm);
 			this.didMounted();
 		}
 	}
-	render (elm) {
-		this.update(elm);
-	}
-	setTemplate () {
+	render () {
 		return (<div></div>);
 	}
 	setState (data) {
 		Object.assign(this.state, data);
-		this.update(this.rootElm);
+		const updateComponent = this.updateComponent();
+		if (typeof updateComponent !== 'boolean' && !updateComponent) {
+			this._patch(this.rootElm);
+		}
+	}
+	_patch (elm) {
+		patch(elm, () => {
+			this.render();
+		});
 	}
 }
 module.exports = exports = BaseIncreComponent;
