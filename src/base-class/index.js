@@ -10,7 +10,9 @@ class BaseIncreComponent {
 	didMounted () {}
 	beforeDestroy () {}
 	destroy () {}
-	updateComponent () {}
+	updateComponent (nextProps, nextState) {
+		return true;
+	}
 	insert (elm) {
 		let root = null;
 		if (!elm) {
@@ -19,19 +21,17 @@ class BaseIncreComponent {
 			root = select(elm);
 		}
 		this.rootElm = root;
-		const beforeMounted = this.beforeMounted();
-		if (typeof beforeMounted !== 'boolean' && !beforeMounted) {
-			this._patch(this.rootElm);
-			this.didMounted();
-		}
+		this.beforeMounted();
+		this._patch(this.rootElm);
+		this.didMounted();
 	}
 	render () {
 		return (<div></div>);
 	}
 	setState (data) {
-		Object.assign(this.state, data);
-		const updateComponent = this.updateComponent();
-		if (typeof updateComponent !== 'boolean' && !updateComponent) {
+		const updateComponent = this.updateComponent(this.props, Object.assign({}, this.state, data));
+		if (typeof updateComponent === 'boolean' && updateComponent) {
+			Object.assign(this.state, data);
 			this._patch(this.rootElm);
 		}
 	}
