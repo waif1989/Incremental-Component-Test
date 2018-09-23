@@ -57,7 +57,9 @@ class BaseIncreComponent {
 			throw new Error('Can\'t find the element node');
 		}
 		for (const i in this.props) {
-			observe(this.props, i, this.constructor._handlePropsChange.bind(this));
+			observe(this.props, i, (newValue, oldValue) => {
+				this.constructor._handlePropsChange.call(this, newValue, oldValue, i)
+			});
 		}
 		this.rootElm = root;
 		this.beforeMounted();
@@ -78,7 +80,7 @@ class BaseIncreComponent {
 	 */
 	setState (data) {
 		const updateComponent = this.updateComponent(this.props, Object.assign({}, this.state, data));
-		// 判断updateComponent函数的结果，如果用户想触发update的时候，函数返回为true，执行patch函数更新
+		// Judge updateComponent function result, If you want to execute UI update, UpdateComponent function will return true，execute patch function.
 		if (typeof updateComponent === 'boolean' && updateComponent) {
 			Object.assign(this.state, data);
 			this.constructor._patch(this.rootElm, this);
@@ -86,6 +88,7 @@ class BaseIncreComponent {
 	}
 	/**
 	 * Differece the node change between new UI element and olds.
+	 * @static
 	 * @param {object} elm - The position of doucument's element for Inserting UI instance.
 	 */
 	static _patch (elm, ctx) {
@@ -93,10 +96,21 @@ class BaseIncreComponent {
 			ctx.render();
 		});
 	}
-	static _handlePropsChange (newValue, oldValue) {
-		// console.log('new---', newValue, 'old---', oldValue);
-		// console.log('===', this.props);
-		this.constructor._patch(this.rootElm, this);
+	/**
+	 * Handle props property change
+	 * @static
+	 * @param {any} newValue - The value of property after the props property change
+	 * @param {any} oldValue - The value of property before the props property change
+	 * @param {string} - The name of props property
+	 */
+	static _handlePropsChange (newValue, oldValue, property) {
+		const updateComponent = this.updateComponent(this.props, this.state);
+		// Judge updateComponent function result, If you want to execute UI update, UpdateComponent function will return true，execute patch function.
+		if (typeof updateComponent === 'boolean' && updateComponent) {
+			this.constructor._patch(this.rootElm, this);
+		} else {
+			this.props[property] = oldValue;
+		}
 	}
 }
 module.exports = exports = BaseIncreComponent;
