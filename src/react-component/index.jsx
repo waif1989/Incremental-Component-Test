@@ -6,26 +6,40 @@ import {patch} from 'incremental-dom';
 class App extends React.Component {
     constructor (props) {
         super(props);
+        this.state = {
+            val: 300
+        }
+    }
+	shouldComponentUpdate (nextProps, nextState) {
+        console.log('should update');
+        return true;
+    }
+    componentWillMount () {
+        setTimeout(() => {
+            this.setState({
+	            val: 500
+            });
+        }, 3000);
     }
     componentDidMount () {
-        function reduce (val) {
-            console.log('React Parent Val:', val)
-        }
-        function add (val) {
-            console.log('React Parent Val:', val)
-        }
-        const instance = Object.create(IncraCom2());
-        instance.initCom({
-            className: 'coutonName3',
-            title: 'IncreDom In React',
-            num: 100
-        }, reduce, add);
-        instance.render('#react-child');
-        setTimeout(() => {
-            instance.updateProps({
-                num: 101
-            });
-        }, 1000);
+        // function reduce (val) {
+        //     console.log('React Parent Val:', val)
+        // }
+        // function add (val) {
+        //     console.log('React Parent Val:', val)
+        // }
+        // const instance = Object.create(IncraCom2());
+        // instance.initCom({
+        //     className: 'coutonName3',
+        //     title: 'IncreDom In React',
+        //     num: 100
+        // }, reduce, add);
+        // instance.render('#react-child');
+        // setTimeout(() => {
+        //     instance.updateProps({
+        //         num: 101
+        //     });
+        // }, 1000);
         /*function inputHandlerCb (val) {
             console.log('In React Parent:', val);
         }
@@ -60,7 +74,7 @@ class App extends React.Component {
         return (
             <div className="react-app">
                 <p>My React Component↓</p>
-                <div id="react-child"></div>
+                <div id="react-child">{this.state.val}</div>
             </div>
         );
     }

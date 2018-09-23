@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', () => {  // 添加DOMContentLoaded�
 	    title: 'IncreDom In RealDom',
 	    num: 12
     });
-	instance3.render('#domapp');
+	instance3.insert('#domapp');
     
     /*function reduce (val) {
         console.log('Real DOM Parent Val:', val)

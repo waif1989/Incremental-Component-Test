@@ -6,19 +6,37 @@ class MyIncraCom3 extends BaseIncreComponent {
 		this.state = {
 			val: 1000
 		};
-		this.add = () => {
-			this.setState({
-				val: this.state.val + 1
-			});
-		};
-		this.reduce = () => {
-			this.setState({
-				val: this.state.val - 1
-			});
-		};
+		this.add = this.add.bind(this);
+		this.reduce = this.reduce.bind(this);
 	}
-	setTemplate () {
-		// return super.setTemplate().func();
+	add () {
+		this.setState({
+			val: this.state.val + 1
+		});
+	}
+	reduce () {
+		this.setState({
+			val: this.state.val - 1
+		});
+	}
+	beforeMounted () {
+		this.setState({
+			val: 998
+		});
+	}
+	didMounted () {
+		this.setState({
+			val: 1003
+		});
+	}
+	updateComponent (nextProps, nextState) {
+		console.log(nextState, this.state);
+		if (nextState.val < 996) {
+			return false;
+		}
+		return true;
+	}
+	render () {
 		return (
 			<div class="content">
 				<div

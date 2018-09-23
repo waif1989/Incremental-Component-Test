@@ -2,6 +2,7 @@
 	<div>
 		<p>My Vue Component↓</p>
 		<div id="vue-inside"></div>
+		<p>{{val}}</p>
 	</div>
 </template>
 
@@ -11,6 +12,11 @@ import IncraCom2 from 'demo2';
 import {patch} from 'incremental-dom';
 export default {
     name: 'MyComponent',
+	data () {
+    	return {
+    		val: 100
+		}
+	},
 	/*mounted () {
         function inputHandlerCb (val) {
             console.log('In Vue Parent:', val);
@@ -42,25 +48,30 @@ export default {
             }, myElement, data);
         }, 2500);
 	}*/
+	created () {
+		setTimeout(() => {
+			this.val = 900;
+		}, 3000);
+	},
 	mounted () {
-        function reduce (val) {
-            console.log('Vue Parent Val:', val)
-        }
-        function add (val) {
-            console.log('Vue Parent Val:', val)
-        }
-        const instance = Object.create(IncraCom2());
-        instance.initCom({
-            className: 'coutonName2',
-            title: 'IncreDom In Vue',
-            num: 90
-        }, reduce, add);
-        instance.render('#vue-inside');
-        setTimeout(() => {
-            instance.updateProps({
-                num: 91
-            });
-        }, 2000);
+        // function reduce (val) {
+        //     console.log('Vue Parent Val:', val)
+        // }
+        // function add (val) {
+        //     console.log('Vue Parent Val:', val)
+        // }
+        // const instance = Object.create(IncraCom2());
+        // instance.initCom({
+        //     className: 'coutonName2',
+        //     title: 'IncreDom In Vue',
+        //     num: 90
+        // }, reduce, add);
+        // instance.render('#vue-inside');
+        // setTimeout(() => {
+        //     instance.updateProps({
+        //         num: 91
+        //     });
+        // }, 2000);
 	}
 }
 </script>
