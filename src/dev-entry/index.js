@@ -15,12 +15,16 @@ new Vue({
 window.addEventListener('DOMContentLoaded', () => {  // 添加DOMContentLoaded事件
     ReactRender('reactapp');
 
-    const instance3 = new IcraCom3({
+    const props = {
 	    className: 'coutonName',
 	    title: 'IncreDom In RealDom',
 	    num: 12
-    });
+    };
+    const instance3 = new IcraCom3(props);
 	instance3.insert('#domapp');
+	setTimeout(() => {
+		props.title = 'hello world';
+	}, 1000);
     
     /*function reduce (val) {
         console.log('Real DOM Parent Val:', val)

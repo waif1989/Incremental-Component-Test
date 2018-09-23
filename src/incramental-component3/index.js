@@ -30,7 +30,8 @@ class MyIncraCom3 extends BaseIncreComponent {
 		});
 	}
 	updateComponent (nextProps, nextState) {
-		console.log(nextState, this.state);
+		// console.log(nextState, this.state, this.props, nextProps);
+		console.log(this.props, nextProps);
 		if (nextState.val < 996) {
 			return false;
 		}

@@ -1,5 +1,6 @@
 import {elementOpen, elementClose, elementVoid, text, patch} from 'incremental-dom';
 import select from 'select-dom';
+import observe from 'smart-observe/dist/smart-observe.min';
 /** Class BaseIncreComponent
  * Base Class of increment dom component.
  * */
@@ -40,18 +41,27 @@ class BaseIncreComponent {
 	}
 	/**
 	 * Insert UI instance to other components.
-	 * @param {string} elm - The position of doucument's element for Inserting UI instance.
+	 * @param {string|object} elm - The element id or class which is for Inserting UI instance. | The element document object.
 	 */
 	insert (elm) {
 		let root = null;
 		if (!elm) {
 			throw new Error('The arguments \'elm\' of insert function must be defined!');
-		} else {
+		}
+		if (typeof elm === 'string') {
 			root = select(elm);
+		} else {
+			root = elm;
+		}
+		if (!root) {
+			throw new Error('Can\'t find the element node');
+		}
+		for (const i in this.props) {
+			observe(this.props, i, this.constructor._handlePropsChange.bind(this));
 		}
 		this.rootElm = root;
 		this.beforeMounted();
-		this._patch(this.rootElm);
+		this.constructor._patch(this.rootElm, this);
 		this.didMounted();
 	}
 	/**
@@ -71,17 +81,22 @@ class BaseIncreComponent {
 		// 判断updateComponent函数的结果，如果用户想触发update的时候，函数返回为true，执行patch函数更新
 		if (typeof updateComponent === 'boolean' && updateComponent) {
 			Object.assign(this.state, data);
-			this._patch(this.rootElm);
+			this.constructor._patch(this.rootElm, this);
 		}
 	}
 	/**
 	 * Differece the node change between new UI element and olds.
 	 * @param {object} elm - The position of doucument's element for Inserting UI instance.
 	 */
-	_patch (elm) {
+	static _patch (elm, ctx) {
 		patch(elm, () => {
-			this.render();
+			ctx.render();
 		});
+	}
+	static _handlePropsChange (newValue, oldValue) {
+		// console.log('new---', newValue, 'old---', oldValue);
+		// console.log('===', this.props);
+		this.constructor._patch(this.rootElm, this);
 	}
 }
 module.exports = exports = BaseIncreComponent;
