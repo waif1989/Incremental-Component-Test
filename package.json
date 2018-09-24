@@ -52,6 +52,7 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "deep-assign": "^2.0.0",
     "smart-observe": "^1.0.4"
   }
 }

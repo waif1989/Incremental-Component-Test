@@ -1,6 +1,7 @@
 import {elementOpen, elementClose, elementVoid, text, patch as _patch} from 'incremental-dom';
 import select from 'select-dom';
 import observe from 'smart-observe/dist/smart-observe.min';
+import deepAssign from 'deep-assign';
 /** Class BaseIncreComponent
  * Base Class of increment dom component.
  * */
@@ -79,10 +80,11 @@ class BaseIncreComponent {
 	 * @param {object} data - The new value of state property
 	 */
 	setState (data) {
-		const updateComponent = this.updateComponent(this.props, Object.assign({}, this.state, data));
+		const temp = {};
+		const updateComponent = this.updateComponent(this.props, deepAssign(temp, this.state, data));
 		// Judge updateComponent function result, If you want to execute UI update, UpdateComponent function will return true，execute patch function.
 		if (typeof updateComponent === 'boolean' && updateComponent) {
-			Object.assign(this.state, data);
+			this.state = temp;
 			this.constructor.patch(this.rootElm, this);
 		}
 	}
