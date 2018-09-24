@@ -33,7 +33,7 @@ class MyIncraCom3 extends BaseIncreComponent {
 		// console.log(nextState, this.state, this.props, nextProps);
 		// console.log('===', nextProps);
 		if (nextProps.title === 'hello world') {
-			return false;
+			return true;
 		}
 		if (nextState.val < 996) {
 			return false;

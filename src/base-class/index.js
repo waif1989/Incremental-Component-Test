@@ -2,6 +2,7 @@ import {elementOpen, elementClose, elementVoid, text, patch as _patch} from 'inc
 import select from 'select-dom';
 import observe from 'smart-observe/dist/smart-observe.min';
 import deepAssign from 'deep-assign';
+import cloneDeep from 'clone-deep';
 /** Class BaseIncreComponent
  * Base Class of increment dom component.
  * */
@@ -11,7 +12,8 @@ class BaseIncreComponent {
 	 * @param {object} props - The props value of instance.
 	 */
 	constructor (props) {
-		this.props = props;
+		this.__props__ = props;
+		this.props = cloneDeep(props);
 		this.state = {};
 		this.rootElm = null;
 	}
@@ -57,8 +59,8 @@ class BaseIncreComponent {
 		if (!root) {
 			throw new Error('Can\'t find the element node');
 		}
-		for (const i in this.props) {
-			observe(this.props, i, (newValue, oldValue) => {
+		for (const i in this.__props__) {
+			observe(this.__props__, i, (newValue, oldValue) => {
 				this.constructor.handlePropsChange.call(this, newValue, oldValue, i)
 			});
 		}
@@ -106,12 +108,11 @@ class BaseIncreComponent {
 	 * @param {string} - The name of props property
 	 */
 	static handlePropsChange (newValue, oldValue, property) {
-		const updateComponent = this.updateComponent(this.props, this.state);
+		const updateComponent = this.updateComponent(this.__props__, this.state);
 		// Judge updateComponent function result, If you want to execute UI update, UpdateComponent function will return true，execute patch function.
 		if (typeof updateComponent === 'boolean' && updateComponent) {
+			this.props[property] = newValue;
 			this.constructor.patch(this.rootElm, this);
-		} else {
-			this.props[property] = oldValue;
 		}
 	}
 }

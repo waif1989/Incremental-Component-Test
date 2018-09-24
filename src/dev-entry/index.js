@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', () => {  // 添加DOMContentLoaded�
     const instance3 = new IcraCom3(props);
 	instance3.insert('#domapp');
 	setTimeout(() => {
-		props.title = 'hello world1';
+		props.title = 'hello world';
 	}, 1000);
     
     /*function reduce (val) {
