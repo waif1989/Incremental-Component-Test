@@ -1,3 +1,6 @@
+/**
+ * Increment-component --- By Ccw
+ */
 import {patch as _patch} from 'incremental-dom';
 import select from 'select-dom';
 import observe from 'smart-observe/dist/smart-observe';
@@ -20,7 +23,7 @@ class BaseIncreComponent {
 	/**
 	 * The life hook before the UI component be rendered into document.
 	 */
-	beforeMounted () {}
+    willMounted () {}
 	/**
 	 * The life hook after the UI component be rendered into document.
 	 */
@@ -28,11 +31,17 @@ class BaseIncreComponent {
 	/**
 	 * The life hook before the UI component be destroyed.
 	 */
-	beforeDestroy () {}
+	beforeDestroy (next) {
+		next();
+	}
 	/**
-	 * The life hook after the UI component be destroyed.
+	 * Destroy the component instance
 	 */
-	destroy () {}
+	desIns () {
+		this.beforeDestroy(() => {
+            this.rootElm.remove();
+		});
+	}
 	/**
 	 * The life hook when the UI component's state properties have changed.
 	 * @param {object} nextProps - The value of props which has be changed.
@@ -69,7 +78,7 @@ class BaseIncreComponent {
 			}
 		}
 		this.rootElm = root;
-		this.beforeMounted();
+		this.willMounted();
 		this.constructor.patch(this.rootElm, this);
 		this.didMounted();
 	}
@@ -113,7 +122,6 @@ class BaseIncreComponent {
 	 */
 	static handlePropsChange (newValue, oldValue, property) {
 		const updateComponent = this.updateComponent(this.__props__, this.state);
-		// Judge updateComponent function result, If you want to execute UI update, UpdateComponent function will return true，execute patch function.
 		if (typeof updateComponent === 'boolean' && updateComponent) {
             this.props[property] = newValue;
 			this.constructor.patch(this.rootElm, this);

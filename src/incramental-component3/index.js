@@ -10,16 +10,18 @@ class MyIncraCom3 extends BaseIncreComponent {
 		this.reduce = this.reduce.bind(this);
 	}
 	add () {
+        this.props.addCb(this.state.val + 1);
 		this.setState({
 			val: this.state.val + 1
 		});
 	}
 	reduce () {
+        this.props.redCb(this.state.val - 1);
 		this.setState({
 			val: this.state.val - 1
 		});
 	}
-	beforeMounted () {
+	willMounted () {
 		// this.setState({
 		// 	val: 998
 		// });
@@ -38,6 +40,12 @@ class MyIncraCom3 extends BaseIncreComponent {
 		}
 		return true;
 	}
+    beforeDestroy (next) {
+		console.log('I am ready to destroy');
+		setTimeout(() => {
+            super.beforeDestroy(next);
+		}, 1000)
+    }
 	render () {
 		let tmp = null;
         if (this.props.arrayTmp) {
