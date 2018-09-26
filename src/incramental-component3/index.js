@@ -20,8 +20,6 @@ class MyIncraCom3 extends BaseIncreComponent {
 		});
 	}
 	beforeMounted () {
-		// console.log('---', this.__props__, this.props);
-		
 		// this.setState({
 		// 	val: 998
 		// });
@@ -32,9 +30,6 @@ class MyIncraCom3 extends BaseIncreComponent {
 		// });
 	}
 	updateComponent (nextProps, nextState) {
-         console.log('***', nextProps, this.props)
-		// console.log(nextState, this.state, this.props, nextProps);
-		// console.log('===', nextProps);
 		if (nextProps.title === 'hello world') {
 			return true;
 		}
