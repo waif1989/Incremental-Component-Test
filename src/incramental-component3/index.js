@@ -20,16 +20,19 @@ class MyIncraCom3 extends BaseIncreComponent {
 		});
 	}
 	beforeMounted () {
-		this.setState({
-			val: 998
-		});
+		// console.log('---', this.__props__, this.props);
+		
+		// this.setState({
+		// 	val: 998
+		// });
 	}
 	didMounted () {
-		this.setState({
-			val: 1003
-		});
+		// this.setState({
+		// 	val: 1003
+		// });
 	}
 	updateComponent (nextProps, nextState) {
+         console.log('***', nextProps, this.props)
 		// console.log(nextState, this.state, this.props, nextProps);
 		// console.log('===', nextProps);
 		if (nextProps.title === 'hello world') {
@@ -41,12 +44,19 @@ class MyIncraCom3 extends BaseIncreComponent {
 		return true;
 	}
 	render () {
+		let tmp = null;
+        if (this.props.arrayTmp) {
+            tmp = <div>{this.props.arrayTmp[0]}</div>
+        } else {
+            tmp = <div>noTmp</div>
+        }
 		return (
 			<div class="content">
 				<div
 					class={this.state.val < 1001 ? this.props.className : `${this.props.className} red`}>{this.props.title}↓
 				</div>
 				<p>Props Name: {this.props.num}</p>
+				{tmp}
 				<div>
 					<button onclick={this.reduce}>-</button>
 					<input type="text" value={this.state.val}/>

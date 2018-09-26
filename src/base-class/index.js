@@ -1,6 +1,6 @@
-import {elementOpen, elementClose, elementVoid, text, patch as _patch} from 'incremental-dom';
+import {patch as _patch} from 'incremental-dom';
 import select from 'select-dom';
-import observe from 'smart-observe/dist/smart-observe.min';
+import observe from 'smart-observe/dist/smart-observe';
 import deepAssign from 'deep-assign';
 import cloneDeep from 'clone-deep';
 /** Class BaseIncreComponent
@@ -60,9 +60,13 @@ class BaseIncreComponent {
 			throw new Error('Can\'t find the element node');
 		}
 		for (const i in this.__props__) {
-			observe(this.__props__, i, (newValue, oldValue) => {
-				this.constructor.handlePropsChange.call(this, newValue, oldValue, i)
-			});
+			if (this.__props__.hasOwnProperty(i)) {
+                observe.watch(this.__props__, i, (newValue, oldValue) => {
+                    this.constructor.handlePropsChange.call(this, newValue, oldValue, i)
+                }, {
+                	deep: true
+                });
+			}
 		}
 		this.rootElm = root;
 		this.beforeMounted();
@@ -103,15 +107,15 @@ class BaseIncreComponent {
 	/**
 	 * Handle props property change
 	 * @static
-	 * @param {any} newValue - The value of property after the props property change
-	 * @param {any} oldValue - The value of property before the props property change
+	 * @param {*} newValue - The value of property after the props property change
+	 * @param {*} oldValue - The value of property before the props property change
 	 * @param {string} - The name of props property
 	 */
 	static handlePropsChange (newValue, oldValue, property) {
 		const updateComponent = this.updateComponent(this.__props__, this.state);
 		// Judge updateComponent function result, If you want to execute UI update, UpdateComponent function will return true，execute patch function.
 		if (typeof updateComponent === 'boolean' && updateComponent) {
-			this.props[property] = newValue;
+            this.props[property] = newValue;
 			this.constructor.patch(this.rootElm, this);
 		}
 	}

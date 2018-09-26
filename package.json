@@ -54,6 +54,9 @@
   "dependencies": {
     "clone-deep": "^4.0.0",
     "deep-assign": "^2.0.0",
-    "smart-observe": "^1.0.4"
+    "pop-observe": "^2.0.2",
+    "smart-observe": "^1.0.4",
+    "spyo": "^1.0.1",
+    "universal-observer": "^1.0.1"
   }
 }
