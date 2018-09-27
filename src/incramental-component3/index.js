@@ -39,11 +39,10 @@ class MyIncraCom3 extends BaseIncrClass {
 		// this.setState({
 		// 	val: 1003
 		// });
-        
-        this.inTrig = this.inTrig - 1;
-       setTimeout(() => {
-           this.insProps.val = 50;
-       }, 1000);
+		this.inTrig = this.inTrig - 1;
+		setTimeout(() => {
+		   this.insProps.val = 50;
+		}, 1000);
 	}
 	updateComponent (nextProps, nextState, next) {
 		if (nextProps.title === 'hello world') {
