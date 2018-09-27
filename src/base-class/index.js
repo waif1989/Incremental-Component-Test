@@ -15,7 +15,6 @@ class BaseIncrClass {
 	 * @param {object} props - The props value of instance.
 	 */
 	constructor (props) {
-		this.__hasInsert__ = false;
 		this.__isSetState__ = false;
 		this.__props__ = props;
 		this.props = cloneDeep(props);
@@ -58,16 +57,16 @@ class BaseIncrClass {
 	 * Insert UI instance to other components.
 	 * @param {string|object} elm - The element id or class which is for Inserting UI instance. | The element document object.
 	 */
-	insert (elm, insertTimes = 1) {
-		let _insertTimes = insertTimes;
-		if (_insertTimes === 1) {
+	insert (elm, inTrig = 1) {
+		let _inTrig = inTrig;
+		if (_inTrig > 0) {
             this.constructor.createRootElm.call(this, elm);
             this.constructor.bindProps.call(this);
             this.constructor.bindState.call(this);
             this.willMounted();
             this.constructor.patch(this.rootElm, this);
             this.didMounted();
-            ++_insertTimes;
+            --_inTrig;
 		} else {
 			this.render();
 		}

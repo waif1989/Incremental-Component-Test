@@ -9,6 +9,7 @@ class MyIncraCom3 extends BaseIncrClass {
 		};
 		this.ins = null;
 		this.insProps = null;
+		this.inTrig = 1;
 		this.add = this.add.bind(this);
 		this.reduce = this.reduce.bind(this);
 	}
@@ -30,7 +31,6 @@ class MyIncraCom3 extends BaseIncrClass {
 		// 	val: 998
 		// });
         this.insProps = {
-        	canInsert: 1,
             val: this.state.val
         };
         this.ins = new IcraCom4(this.insProps);
@@ -39,16 +39,11 @@ class MyIncraCom3 extends BaseIncrClass {
 		// this.setState({
 		// 	val: 1003
 		// });
-		
-       /* const props = {
-            val: this.state.val
-        };
-        const instance4 = new IcraCom4(props);
-        instance4.insert('#child');*/
-       this.insProps.canInsert = 2;
+        
+        this.inTrig = this.inTrig - 1;
        setTimeout(() => {
            this.insProps.val = 50;
-       }, 1000)
+       }, 1000);
 	}
 	updateComponent (nextProps, nextState, next) {
 		if (nextProps.title === 'hello world') {
@@ -89,7 +84,7 @@ class MyIncraCom3 extends BaseIncrClass {
 					<button onclick={this.add}>+</button>
 				</div>
 				<div id="child">
-					{this.ins.insert('#child', this.insProps.canInsert)}
+					{this.ins.insert('#child', this.inTrig)}
 				</div>
 			</div>
 		);
