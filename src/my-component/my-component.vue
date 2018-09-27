@@ -51,7 +51,7 @@ export default {
         };
         const instance3 = new IcraCom3(props);
         instance3.insert(this.$refs['vueInside']); // use this.$refs['vueInside'] or '#vue-inside'
-        setTimeout(() => { // do someting asnyc
+        /*setTimeout(() => { // do someting asnyc
             props.title = 'hello world1'; // new RAM address
             this.title = 'hello world2'; // 'props.title' RAM not change
             props.arrayTmp.$set(0, 99); // new RAM address
@@ -60,7 +60,7 @@ export default {
         }, 1000);
         setTimeout(() => { // do someting asnyc
             // instance3.desIns(); // Test destory instance
-        }, 3000);
+        }, 3000);*/
 	}
 }
 </script>
