@@ -31,16 +31,17 @@ class BaseIncreComponent {
 	/**
 	 * The life hook before the UI component be destroyed.
 	 */
-	beforeDestroy (next) {
-		next();
+	beforeDestroy () {
+		return true;
 	}
 	/**
 	 * Destroy the component instance
 	 */
 	desIns () {
-		this.beforeDestroy(() => {
+		const next = () => {
             this.rootElm.remove();
-		});
+		};
+		return this.beforeDestroy(next) && this.rootElm.remove();
 	}
 	/**
 	 * The life hook when the UI component's state properties have changed.

@@ -42,9 +42,10 @@ class MyIncraCom3 extends BaseIncreComponent {
 	}
     beforeDestroy (next) {
 		console.log('I am ready to destroy');
+        // next(); // snyc destroy
 		setTimeout(() => {
-            super.beforeDestroy(next);
-		}, 1000)
+            next(); // asnyc destroy
+		}, 1000);
     }
 	render () {
 		let tmp = null;
