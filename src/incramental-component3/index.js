@@ -1,6 +1,6 @@
 import 'incremental-dom';
-import BaseIncreComponent from '../base-class';
-class MyIncraCom3 extends BaseIncreComponent {
+import BaseIncrClass from '../base-class';
+class MyIncraCom3 extends BaseIncrClass {
 	constructor (props) {
 		super(props);
 		this.state = {

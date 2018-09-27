@@ -6,10 +6,10 @@ import select from 'select-dom';
 import observe from 'smart-observe/dist/smart-observe';
 import deepAssign from 'deep-assign';
 import cloneDeep from 'clone-deep';
-/** Class BaseIncreComponent
+/** Class BaseIncrClass
  * Base Class of increment dom component.
  * */
-class BaseIncreComponent {
+class BaseIncrClass {
 	/**
 	 * Create increment dom component.
 	 * @param {object} props - The props value of instance.
@@ -167,5 +167,5 @@ class BaseIncreComponent {
         }
 	}
 }
-module.exports = exports = BaseIncreComponent;
-module.default = BaseIncreComponent;
+module.exports = exports = BaseIncrClass;
+module.default = BaseIncrClass;
