@@ -49,7 +49,7 @@ class BaseIncreComponent {
 	 * @param {object} nextState - The value of state which has be changed.
 	 * @return {boolean} - Returning boolean value which notices UI component should be updated or not.
 	 */
-	updateComponent (nextProps, nextState) {
+	updateComponent (nextProps, nextState, next) {
 		return true;
 	}
 	/**
@@ -96,13 +96,12 @@ class BaseIncreComponent {
 	 * @param {object} data - The new value of state property
 	 */
 	setState (data) {
+		const next = () => {
+            deepAssign(this.state, data);
+            this.constructor.patch(this.rootElm, this);
+		};
 		const temp = {};
-		const updateComponent = this.updateComponent(this.props, deepAssign(temp, this.state, data));
-		// Judge updateComponent function result, If you want to execute UI update, UpdateComponent function will return true，execute patch function.
-		if (typeof updateComponent === 'boolean' && updateComponent) {
-			this.state = temp;
-			this.constructor.patch(this.rootElm, this);
-		}
+		return this.updateComponent(this.props, deepAssign(temp, this.state, data), next) && next();
 	}
 	/**
 	 * Differece the node change between new UI element and olds.
@@ -122,11 +121,11 @@ class BaseIncreComponent {
 	 * @param {string} - The name of props property
 	 */
 	static handlePropsChange (newValue, oldValue, property) {
-		const updateComponent = this.updateComponent(this.__props__, this.state);
-		if (typeof updateComponent === 'boolean' && updateComponent) {
+        const next = () => {
             this.props[property] = newValue;
-			this.constructor.patch(this.rootElm, this);
-		}
+            this.constructor.patch(this.rootElm, this);
+        };
+        return this.updateComponent(this.__props__, this.state, next) && next();
 	}
 }
 module.exports = exports = BaseIncreComponent;

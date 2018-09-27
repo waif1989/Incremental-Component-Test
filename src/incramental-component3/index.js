@@ -14,6 +14,7 @@ class MyIncraCom3 extends BaseIncreComponent {
 		this.setState({
 			val: this.state.val + 1
 		});
+        // this.state.val++;
 	}
 	reduce () {
         this.props.redCb(this.state.val - 1);
@@ -31,14 +32,14 @@ class MyIncraCom3 extends BaseIncreComponent {
 		// 	val: 1003
 		// });
 	}
-	updateComponent (nextProps, nextState) {
+	updateComponent (nextProps, nextState, next) {
 		if (nextProps.title === 'hello world') {
-			return true;
+            next();
 		}
 		if (nextState.val < 996) {
 			return false;
 		}
-		return true;
+        next();
 	}
     beforeDestroy (next) {
 		console.log('I am ready to destroy');
