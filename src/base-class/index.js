@@ -58,43 +58,9 @@ class BaseIncreComponent {
 	 * @param {string|object} elm - The element id or class which is for Inserting UI instance. | The element document object.
 	 */
 	insert (elm) {
-		let root = null;
-		if (!elm) {
-			throw new Error('The arguments \'elm\' of insert function must be defined!');
-		}
-		if (typeof elm === 'string') {
-			root = select(elm);
-		} else {
-			root = elm;
-		}
-		if (!root) {
-			throw new Error('Can\'t find the element node');
-		}
-		for (const i in this.__props__) {
-			if (this.__props__.hasOwnProperty(i)) {
-                observe.watch(this.__props__, i, (newValue, oldValue) => {
-                    this.constructor.handlePropsChange.call(this, newValue, oldValue, i)
-                }, {
-                	deep: true
-                });
-			}
-		}
-        for (const j in this.state) {
-            if (this.state.hasOwnProperty(j)) {
-                observe.watch(this.state, j, (newValue, oldValue) => {
-                	if (!this.__isSetState__) {
-                        this.state[j] = oldValue;
-                        this.__isSetState__ = true;
-                        console.error('Must use setState to update!');
-	                } else {
-                        this.__isSetState__ = false;
-	                }
-                }, {
-                    deep: true
-                });
-            }
-        }
-		this.rootElm = root;
+		this.constructor.createRootElm.call(this, elm);
+		this.constructor.bindProps.call(this);
+		this.constructor.bindState.call(this);
 		this.willMounted();
 		this.constructor.patch(this.rootElm, this);
 		this.didMounted();
@@ -143,6 +109,62 @@ class BaseIncreComponent {
             this.constructor.patch(this.rootElm, this);
         };
         return this.updateComponent(this.__props__, this.state, next) && next();
+	}
+    /**
+     * Set root element
+     * @static
+     * @param {string|object} elm - The root of parent's component which your component wish to insert
+     */
+	static createRootElm (elm) {
+        let root = null;
+        if (!elm) {
+            throw new Error('The arguments \'elm\' of \'insert\' function must be defined!');
+        }
+        if (typeof elm === 'string') {
+            root = select(elm);
+        } else {
+            root = elm;
+        }
+        if (!root) {
+            throw new Error('Can\'t find the element node');
+        }
+        this.rootElm = root;
+	}
+	/**
+	 * Bind props property use Object.defineProperty
+	 * @static
+	 * */
+	static bindProps () {
+        for (const i in this.__props__) {
+            if (this.__props__.hasOwnProperty(i)) {
+                observe.watch(this.__props__, i, (newValue, oldValue) => {
+                    this.constructor.handlePropsChange.call(this, newValue, oldValue, i)
+                }, {
+                    deep: true
+                });
+            }
+        }
+	}
+    /**
+     * Bind state property use Object.defineProperty
+     * @static
+     * */
+	static bindState () {
+        for (const j in this.state) {
+            if (this.state.hasOwnProperty(j)) {
+                observe.watch(this.state, j, (newValue, oldValue) => {
+                    if (!this.__isSetState__) {
+                        this.state[j] = oldValue;
+                        this.__isSetState__ = true;
+                        console.error('Must use setState to update!');
+                    } else {
+                        this.__isSetState__ = false;
+                    }
+                }, {
+                    deep: true
+                });
+            }
+        }
 	}
 }
 module.exports = exports = BaseIncreComponent;
