@@ -15,6 +15,7 @@ class BaseIncreComponent {
 	 * @param {object} props - The props value of instance.
 	 */
 	constructor (props) {
+		this.__isSetState__ = false;
 		this.__props__ = props;
 		this.props = cloneDeep(props);
 		this.state = {};
@@ -78,6 +79,21 @@ class BaseIncreComponent {
                 });
 			}
 		}
+        for (const j in this.state) {
+            if (this.state.hasOwnProperty(j)) {
+                observe.watch(this.state, j, (newValue, oldValue) => {
+                	if (!this.__isSetState__) {
+                        this.state[j] = oldValue;
+                        this.__isSetState__ = true;
+                        console.error('Must use setState to update!');
+	                } else {
+                        this.__isSetState__ = false;
+	                }
+                }, {
+                    deep: true
+                });
+            }
+        }
 		this.rootElm = root;
 		this.willMounted();
 		this.constructor.patch(this.rootElm, this);
@@ -97,6 +113,7 @@ class BaseIncreComponent {
 	 */
 	setState (data) {
 		const next = () => {
+            this.__isSetState__ = true;
             deepAssign(this.state, data);
             this.constructor.patch(this.rootElm, this);
 		};

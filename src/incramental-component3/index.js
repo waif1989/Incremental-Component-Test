@@ -55,6 +55,7 @@ class MyIncraCom3 extends BaseIncreComponent {
         } else {
             tmp = <div>noTmp</div>
         }
+        const deep = <div>{this.props.deepObj.dd.ddd[0]},{this.props.deepObj.dd2}</div>
 		return (
 			<div class="content">
 				<div
@@ -62,6 +63,7 @@ class MyIncraCom3 extends BaseIncreComponent {
 				</div>
 				<p>Props Name: {this.props.num}</p>
 				{tmp}
+				{deep}
 				<div>
 					<button onclick={this.reduce}>-</button>
 					<input type="text" value={this.state.val}/>

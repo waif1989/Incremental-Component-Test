@@ -36,6 +36,12 @@ export default {
             title: this.title,
             num: 1,
 	        arrayTmp: [10, 11],
+	        deepObj: {
+                dd: {
+                    ddd: [1]
+                },
+		        dd2: 10
+	        },
 	        addCb: (val) => {
                 this.emit(val);
 	        },
@@ -49,6 +55,8 @@ export default {
             props.title = 'hello world1'; // new RAM address
             this.title = 'hello world2'; // 'props.title' RAM not change
             props.arrayTmp.$set(0, 99); // new RAM address
+            props.deepObj.dd.ddd.$set(0, 22); // new RAM address
+            props.deepObj.dd2 = 33; // new RAM address
         }, 1000);
         setTimeout(() => { // do someting asnyc
             // instance3.desIns(); // Test destory instance
